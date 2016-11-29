@@ -1,2 +1,2 @@
-# Singularity-2017
-Code for Singularity (2019A) Vex Starstruck Robot
+# Singularity 2017
+Code for Singularity's Vex Starstruck Robot
