@@ -1,4 +1,5 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, in1,    gyro,           sensorGyro)
 #pragma config(Sensor, dgtl1,  leftEncoder,    sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  rightEncoder,   sensorQuadEncoder)
 #pragma config(Sensor, I2C_1,  liftRight,      sensorQuadEncoderOnI2CPort,    , AutoAssign )
@@ -6,10 +7,10 @@
 #pragma config(Motor,  port1,           leftFront,     tmotorVex393TurboSpeed_HBridge, openLoop)
 #pragma config(Motor,  port2,           leftMiddle,    tmotorVex393TurboSpeed_MC29, openLoop, reversed)
 #pragma config(Motor,  port3,           leftBack,      tmotorVex393TurboSpeed_MC29, openLoop)
-#pragma config(Motor,  port4,           liftLeftTop,   tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_2)
-#pragma config(Motor,  port5,           liftLeftBottom, tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port6,           liftRightTop,  tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_1)
-#pragma config(Motor,  port7,           liftRightBottom, tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port4,           liftRightTop,   tmotorVex393_MC29, openLoop, encoderPort, I2C_2)
+#pragma config(Motor,  port5,           liftLeftTop,  tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_1)
+#pragma config(Motor,  port6,           leftBackTop,   tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port7,           rightBackTop,  tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port8,           rightBack,     tmotorVex393TurboSpeed_MC29, openLoop, reversed)
 #pragma config(Motor,  port9,           rightMiddle,   tmotorVex393TurboSpeed_MC29, openLoop)
 #pragma config(Motor,  port10,          rightFront,    tmotorVex393TurboSpeed_HBridge, openLoop, reversed)
@@ -34,10 +35,14 @@ task autonomous() {
 	go(24);
 }
 
+float g;
+
 task usercontrol() {
 	startTask(liftPID);
-
+	startTask(gyroDrift);
+	startTask(kFilter);
 	while (true) {
+		g = SensorValue[gyro];
 		arcadeDrive();
 		liftControl();
 	}

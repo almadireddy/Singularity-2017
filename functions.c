@@ -1,5 +1,5 @@
 void lift(int power) {
-	motor[liftLeftTop] = motor[liftLeftBottom] = motor[liftRightTop] = motor[liftRightBottom] = power;
+	motor[liftLeftTop] = motor[liftRightTop] = power;
 }
 
 void liftControl() {
@@ -12,11 +12,11 @@ void liftControl() {
 }
 
 void driveL(float power) {
-	motor[leftBack] = motor[leftMiddle] = motor[leftFront] = power;
+	motor[leftBack] = motor[leftMiddle] = motor[leftFront] = motor[leftBackTop] = power;
 }
 
 void driveR(float power) {
-	motor[rightBack] = motor[rightMiddle] = motor[rightFront] = power;
+	motor[rightBack] = motor[rightMiddle] = motor[rightFront] = motor[rightBackTop] = power;
 }
 
 int t = 15;
