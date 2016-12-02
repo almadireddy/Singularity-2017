@@ -86,9 +86,15 @@ task drivePID() {
 }
 
 void go(float inches) {
+	startTask(drivePID);
 	SensorValue[leftEncoder] = SensorValue[rightEncoder] = 0;
 
 	driveTarget = inches * ticksPerInch;
+
+	if (abs(driveError) < 10) {
+		wait1Msec(1000);
+	}
+	stopTask(drivePID);
 }
 // End Drive PID //
 
@@ -141,8 +147,6 @@ task gyroTurn() {
 		}
 
 		speedGyro = kpGyro * errorGyro + kiGyro * integralGyro + kdGyro * derivativeGyro;
-		driveL(-speedGyro);
-		driveR(speedGyro);
 
 		wait1Msec(25);
 	}
@@ -179,7 +183,7 @@ task kFilter() {
 
 	while(true) {
 		lastEstimate = estimate;
-		measurement = sensorValue[gyro];
+		measurement = SensorValue[gyro];
 
 		kG = Eest / (Eest + Emea);
 
@@ -215,4 +219,26 @@ task kFilter() {
 	}
 }
 
-//
+void startGyroTasks() {
+	startTask(kFilter);
+	startTask(gyroTurn);
+	startTask(gyroDrift);
+}
+
+void stopGyroTasks() {
+	stopTask(kFilter);
+	stopTask(gyroTurn);
+	stopTask(gyroDrift);
+}
+
+void turn(float degrees) {
+	startGyroTasks();
+	targetGyro = degrees;
+
+	driveL(-speedGyro);
+	driveR(speedGyro);
+
+	if (abs(errorGyro) < 10)
+		wait1Msec(1000);
+	stopGyroTasks();
+}

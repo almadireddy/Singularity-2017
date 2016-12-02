@@ -36,3 +36,20 @@ void arcadeDrive() {
 	driveL(ch3 + ch1);
 	driveR(ch3 - ch1);
 }
+
+string mainBattery, backupBattery;
+
+void lcd() {
+	clearLCDLine(0);
+	clearLCDLine(1);
+
+	displayLCDString(0, 0, "Primary: ");
+	sprintf(mainBattery, "%1.2f%c", nImmediateBatteryLevel/1000.0,'V'); //Build the value to be displayed
+	displayNextLCDString(mainBattery);
+
+	displayLCDString(1, 0, "Backup: ");
+	sprintf(backupBattery, "%1.2f%c", BackupBatteryLevel/1000.0, 'V');    //Build the value to be displayed
+	displayNextLCDString(backupBattery);
+
+	wait1Msec(100);
+}
