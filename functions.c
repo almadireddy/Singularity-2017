@@ -20,7 +20,7 @@ void driveR(float power) {
 }
 
 int t = 15;
-int ch3, ch1;
+int ch3, ch1, ch2;
 
 void arcadeDrive() {
 	if (abs(vexRT[Ch3]) > t)
@@ -35,6 +35,21 @@ void arcadeDrive() {
 
 	driveL(ch3 + ch1);
 	driveR(ch3 - ch1);
+}
+
+void tankDrive() {
+	if (abs(vexRT[Ch3]) > t)
+		ch3 = vexRT[Ch3];
+	else
+		ch3 = 0;
+
+	if (abs(vexRT[Ch2]) > t)
+		ch2 = vexRT[Ch2];
+	else
+		ch2 = 0;
+
+	driveL(ch3);
+	driveR(ch2);
 }
 
 string mainBattery, backupBattery;

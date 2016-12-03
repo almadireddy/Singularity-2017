@@ -25,28 +25,43 @@
 
 void pre_auton() {
 	bStopTasksBetweenModes = true;
+  SensorScale[gyro] = 900/669;
+  wait1Msec(2000);
+	SensorValue[leftEncoder] = SensorValue[rightEncoder] = 0;
 }
-
+//pls work
 task autonomous() {
 	driveKp = 0.3;
 	driveKi = 0.05;
 	driveKd = 0.0;
 
-	kpGyro = 0.3;
-	kiGyro = 0.1;
+	kpGyro = 0.05;
+	kiGyro = 0.06;
 	kdGyro = 0.0;
 
-	go(24);
-}
+	go(120);
+	wait1Msec(5000);
+	go(-30);
+	wait1Msec(1000);
+	go(45);
+	wait1Msec(1500);
+	go(-50);
+	wait1Msec(1500);
+	go(50);
+	wait1Msec(1500);
+	go(-50);
+	wait1Msec(1500);
 
-float g;
+	//startGyroTasks();
+	//turn(90);
+
+}
 
 task usercontrol() {
 	startTask(liftPID);
 	startTask(gyroDrift);
 	startTask(kFilter);
 	while (true) {
-		g = SensorValue[gyro];
 		arcadeDrive();
 		liftControl();
 		lcd();

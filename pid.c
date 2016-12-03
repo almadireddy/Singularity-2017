@@ -35,7 +35,8 @@ float driveKd = 0.4;
 float driveCurrentValue;
 float driveTarget, driveError, driveLastError, driveIntegral, driveDerivative, driveOutput;
 float driveIntegralCap = 50;
-float ticksPerInch = 360/(4 * PI);
+float rev = 360;
+float ticksPerInch = rev/(4 * PI);
 float driveMax = 80;
 float driveMin = -80;
 float secondary, constant, difference;
@@ -62,15 +63,6 @@ task drivePID() {
 
 		driveError = driveCurrentValue - driveTarget;
 
-		if( driveKi != 0 ) {
-			if( abs(driveError) < driveIntegralCap)
-				driveIntegral = driveIntegral + driveError;
-			else
-				driveIntegral = 0;
-		}
-		else
-			driveIntegral = 0;
-
 		driveDerivative = driveError - driveLastError;
 		driveLastError  = driveError;
 
@@ -90,11 +82,6 @@ void go(float inches) {
 	SensorValue[leftEncoder] = SensorValue[rightEncoder] = 0;
 
 	driveTarget = inches * ticksPerInch;
-
-	if (abs(driveError) < 10) {
-		wait1Msec(1000);
-	}
-	stopTask(drivePID);
 }
 // End Drive PID //
 
@@ -131,6 +118,35 @@ task gyroDrift() {
 	}
 }
 
+//task gyroTurn() {
+//	while(true) {
+//		errorGyro = targetGyro - currentValueGyro;
+//		derivativeGyro = errorGyro - lastErrorGyro;
+//		integralGyro = integralGyro + lastErrorGyro;
+//		lastErrorGyro = errorGyro;
+//		if(abs(integralGyro) > 380)
+//		{
+//			integralGyro = 380;
+//		}
+//		if(errorGyro == 0)
+//		{
+//			integralGyro = 0;
+//		}
+
+//		speedGyro = kpGyro * errorGyro + kiGyro * integralGyro + kdGyro * derivativeGyro;
+
+//		if(speedGyro > driveMax)
+//			speedGyro = driveMax;
+//		if(speedGyro < driveMin)
+//			speedGyro = driveMin;
+
+//		driveR(speedGyro);
+//		driveL(-speedGyro);
+
+//		wait1Msec(25);
+//	}
+//}
+
 task gyroTurn() {
 	while(true) {
 		errorGyro = targetGyro - currentValueGyro;
@@ -147,6 +163,9 @@ task gyroTurn() {
 		}
 
 		speedGyro = kpGyro * errorGyro + kiGyro * integralGyro + kdGyro * derivativeGyro;
+
+		driveR(-speedGyro);
+		driveL(speedGyro);
 
 		wait1Msec(25);
 	}
@@ -232,13 +251,5 @@ void stopGyroTasks() {
 }
 
 void turn(float degrees) {
-	startGyroTasks();
-	targetGyro = degrees;
-
-	driveL(-speedGyro);
-	driveR(speedGyro);
-
-	if (abs(errorGyro) < 10)
-		wait1Msec(1000);
-	stopGyroTasks();
+	targetGyro = degrees*10;
 }
