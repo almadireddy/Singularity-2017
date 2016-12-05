@@ -29,7 +29,7 @@ void arcadeDrive() {
 		ch3 = 0;
 
 	if (abs(vexRT[Ch1]) > t)
-		ch1 = vexRT[Ch1];
+		ch1 = (1/(pow(127,2)) * (pow(vexRT[Ch1], 3);
 	else
 		ch1 = 0;
 

@@ -155,7 +155,7 @@ task gyroTurn() {
 		lastErrorGyro = errorGyro;
 		if(abs(integralGyro) > 380)
 		{
-			integralGyro = 0;
+			integralGyro = 380;
 		}
 		if(errorGyro == 0)
 		{
@@ -239,17 +239,18 @@ task kFilter() {
 }
 
 void startGyroTasks() {
-	startTask(kFilter);
+	//startTask(kFilter);
 	startTask(gyroTurn);
 	startTask(gyroDrift);
 }
 
 void stopGyroTasks() {
-	stopTask(kFilter);
+	//stopTask(kFilter);
 	stopTask(gyroTurn);
 	stopTask(gyroDrift);
 }
 
 void turn(float degrees) {
+	//startGyroTasks();
 	targetGyro = degrees*10;
 }
