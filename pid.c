@@ -6,7 +6,6 @@ float liftTarget, liftError, liftLastError, liftIntegral, liftDerivative, liftOu
 float liftIntegralCap = 50;
 float dt = 25;
 
-
 task liftPID() {
 	liftLastError = 0;
 	liftIntegral  = 0;

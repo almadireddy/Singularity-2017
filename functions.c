@@ -19,7 +19,7 @@ void driveR(float power) {
 	motor[rightBack] = motor[rightMiddle] = motor[rightFront] = motor[rightBackTop] = power;
 }
 
-int t = 15;
+int t = 20;
 int ch3, ch1, ch2;
 
 void arcadeDrive() {
@@ -28,7 +28,7 @@ void arcadeDrive() {
 	else
 		ch3 = 0;
 
-	if (abs(vexRT[Ch1]) > t)
+	if (abs(vexRT[Ch1]) > 10)
 		ch1 = (1/(pow(127,2)) * (pow(vexRT[Ch1], 3);
 	else
 		ch1 = 0;
