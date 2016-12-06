@@ -1,32 +1,3 @@
-// Lift PID //
-float liftKp = 0.3;
-float liftKi = 0.1;
-float liftKd = 0.4;
-float liftTarget, liftError, liftLastError, liftIntegral, liftDerivative, liftOutput;
-float liftIntegralCap = 50;
-float dt = 25;
-
-task liftPID() {
-	liftLastError = 0;
-	liftIntegral  = 0;
-
-	while (true) {
-		liftError = nMotorEncoder[liftRightTop] - nMotorEncoder[liftLeftTop];
-		liftIntegral += dt * (liftError + liftLastError)/2;
-
-		if(liftError == 0)
-			liftIntegral = 0;
-		if(fabs(liftIntegral) > liftIntegralCap)
-			liftIntegral = liftIntegralCap;
-
-		liftDerivative = (liftError - liftLastError)/dt;
-		liftOutput = liftKp*liftError + liftKi*liftIntegral + liftKd*liftDerivative;
-		liftLastError = liftError;
-		wait1Msec(dt);
-	}
-}
-// End Lift PID //
-
 // Drive PID //
 float driveKp = 0.3;
 float driveKi = 0.1;
