@@ -12,11 +12,11 @@ void liftControl() {
 }
 
 void driveL(float power) {
-	motor[leftBack] = motor[leftMiddle] = motor[leftFront] = motor[leftBackTop] = power;
+	motor[leftBack] = motor[leftMiddle] = motor[leftBackTop] = motor[leftbacktopmost] = power;
 }
 
 void driveR(float power) {
-	motor[rightBack] = motor[rightMiddle] = motor[rightFront] = motor[rightBackTop] = power;
+	motor[rightBack] = motor[rightFront] = motor[rightBackTop] = motor[rightbacktopmost] = power;
 }
 
 int t = 20;

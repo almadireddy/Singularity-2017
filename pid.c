@@ -10,6 +10,7 @@ float ticksPerInch = rev/(4 * PI);
 float driveMax = 80;
 float driveMin = -80;
 float secondary, constant, difference;
+float dt = 25;
 
 task drivePID() {
 	driveLastError  = 0;
