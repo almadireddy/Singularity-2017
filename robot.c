@@ -65,47 +65,58 @@ task autonomous() {
 
 	///////////////////////////////////
 	// this kinda works
-	//go(20);
-	//wait1Msec(1000);
-	//stopTask(drivePID);
+	go(20);								// go forward
+	wait1Msec(1000);
+	stopTask(drivePID);
 
-	//startGyroTasks();
-	//targetGyro = 3150;
-	//wait1Msec(3000);
+	startGyroTasks();
+	targetGyro = 3150;		// turn 45 degrees to face pole
+	wait1Msec(3000);
 
-	//go(-20);
-	//wait1Msec(3000);
-	//stopTask(drivePID);
+	go(-22);							// drive backwards
+	wait1Msec(3000);
+	stopTask(drivePID);
 
-	//targetGyro = 6750;
-	//wait1Msec(3000);
+	targetGyro = 6750;		// do 360 turn
+	wait1Msec(3500);
 	//stopTask(gyroTurn);
 
 	//go(-5);
 	//wait1Msec(1000);
+	//stopTask(drivePID);
 
-	//lift(127);
-	//wait1Msec(4500);
-	//lift(-127);
-	//wait1Msec(5000);
-	//lift(0);
-
-	go(24);
-	wait1Msec(1500);
-	stopTask(drivePID);
-
-	startGyroTasks();
-	targetGyro = 900;
-	wait1Msec(1500);
-	stopGyroTasks();
-
-	go(-5);
+	targetGyro = 7200; 		// realign with pole
 	wait1Msec(500);
+	stopGyroTasks();
+
+	go(-20);							// drive backwards
+	wait1Msec(1500);
 	stopTask(drivePID);
 
-	targetGyro = 3150;
-	wait1Msec(1500);
-	stopGyroTasks();
+
+	lift(127);
+	wait1Msec(5000);
+	lift(-127);
+	wait1Msec(5000);
+	lift(0);
+
+	// This doesnt work at all
+	//go(24);
+	//wait1Msec(1500);
+	//stopTask(drivePID);
+
+	//startGyroTasks();
+	//targetGyro = 900;
+	//wait1Msec(1500);
+	//stopGyroTasks();
+
+	//go(-5);
+	//wait1Msec(500);
+	//stopTask(drivePID);
+
+	//targetGyro = 3150;
+	//wait1Msec(1500);
+	//stopGyroTasks();
 
 
 }
