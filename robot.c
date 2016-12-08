@@ -35,8 +35,8 @@ void pre_auton() {
 	wait1Msec(2000);
 	SensorFullCount[in1] = 7200;
 
-	GyroInit();
-	//SensorScale[in1] = 100;
+	SensorScale[in1] = 100;
+	//GyroInit();
 }
 
 task autonomous() {
@@ -90,22 +90,22 @@ task autonomous() {
 	//wait1Msec(5000);
 	//lift(0);
 
-	//go(24);
-	//wait1Msec(1500);
+	go(24);
+	wait1Msec(1500);
 	stopTask(drivePID);
 
 	startGyroTasks();
-	targetGyro = -90;
+	targetGyro = 900;
 	wait1Msec(1500);
 	stopGyroTasks();
 
-	//go(-5);
-	//wait1Msec(500);
-	//stopTask(drivePID);
+	go(-5);
+	wait1Msec(500);
+	stopTask(drivePID);
 
-	//targetGyro = -45;
-	//wait1Msec(1500);
-	//stopGyroTasks();
+	targetGyro = 3150;
+	wait1Msec(1500);
+	stopGyroTasks();
 
 
 }
@@ -114,7 +114,7 @@ task usercontrol() {
 	float x;
 
 	while (true) {
-		x = theGyro.abs_angle;
+		x = getMotorEncoder(liftLeftTop);
 		arcadeDrive();
 		liftControl();
 		lcd();
