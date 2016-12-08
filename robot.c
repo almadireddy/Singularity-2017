@@ -2,8 +2,8 @@
 #pragma config(Sensor, in1,    gyro,           sensorGyro)
 #pragma config(Sensor, dgtl1,  leftEncoder,    sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  rightEncoder,   sensorQuadEncoder)
-#pragma config(Sensor, I2C_1,  liftRight,      sensorQuadEncoderOnI2CPort,    , AutoAssign )
-#pragma config(Sensor, I2C_2,  liftLeft,       sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_1,  liftLeft,       sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_2,  liftRight,      sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Motor,  port1,           rightbacktopmost, tmotorVex393_HBridge, openLoop, reversed)
 #pragma config(Motor,  port2,           leftMiddle,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port3,           leftBack,      tmotorVex393_MC29, openLoop)
@@ -27,18 +27,20 @@
 void pre_auton() {
 	bStopTasksBetweenModes = true;
 	SensorValue[leftEncoder] = SensorValue[rightEncoder] = 0;
-	//GyroInit();
-}
-
-task autonomous() {
 	//Completely clear out any previous sensor readings by setting the port to "sensorNone"
 	SensorType[in1] = sensorNone;
 	wait1Msec(1000);
 	//Reconfigure Analog Port 1 as a Gyro sensor and allow time for ROBOTC to calibrate it
 	SensorType[in1] = sensorGyro;
 	wait1Msec(2000);
+	SensorFullCount[in1] = 7200;
 
 	SensorScale[in1] = 100;
+	//GyroInit();
+}
+
+task autonomous() {
+
 	driveKp = 0.3;
 	driveKi = 0.05;
 	driveKd = 0.0;
@@ -62,38 +64,57 @@ task autonomous() {
 	//wait1Msec(1500);
 
 	///////////////////////////////////
-
-	//go(120);
-	//wait1Msec(5000);
-	//go(-30);
+	// this kinda works
+	//go(20);
 	//wait1Msec(1000);
-	//go(45);
-	//wait1Msec(1500);
-	//go(-50);
-	//wait1Msec(1500);
-	//go(50);
-	//wait1Msec(1500);
-	go(20);
-	wait1Msec(1000);
+	//stopTask(drivePID);
+
+	//startGyroTasks();
+	//targetGyro = 3150;
+	//wait1Msec(3000);
+
+	//go(-20);
+	//wait1Msec(3000);
+	//stopTask(drivePID);
+
+	//targetGyro = 6750;
+	//wait1Msec(3000);
+	//stopTask(gyroTurn);
+
+	//go(-5);
+	//wait1Msec(1000);
+
+	//lift(127);
+	//wait1Msec(4500);
+	//lift(-127);
+	//wait1Msec(5000);
+	//lift(0);
+
+	go(24);
+	wait1Msec(1500);
 	stopTask(drivePID);
 
 	startGyroTasks();
-	targetGyro = 3150;
-	wait1Msec(3000);
-	go(-40);
-	wait1Msec(3000);
+	targetGyro = 900;
+	wait1Msec(1500);
+	stopGyroTasks();
+
+	go(-5);
+	wait1Msec(500);
 	stopTask(drivePID);
-	stopTask(gyroTurn);
-	lift(127);
-	wait1Msec(4500);
-	lift(-127);
-	wait1Msec(5000);
-	lift(0);
+
+	targetGyro = 3150;
+	wait1Msec(1500);
+	stopGyroTasks();
+
 
 }
 
 task usercontrol() {
+	float x;
+
 	while (true) {
+		x = getMotorEncoder(liftLeftTop);
 		arcadeDrive();
 		liftControl();
 		lcd();
