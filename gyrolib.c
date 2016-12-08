@@ -131,22 +131,22 @@ task GyroTask()
     while(true)
         {
         // get current gyro value (deg * 10)
-        gyro_value = SensorValue[theGyro.port];
+        gyro_value = SensorValue[theGyro.port]*1.25;
 
-        // Filter drift when not moving
-        // check this every 250mS
-        if( (nSysTime - nSysTimeOffset) > 250 )
-            {
-            if( abs( gyro_value - lastDriftGyro ) < GYRO_DRIFT_THRESHOLD )
-                theGyro.drift_error += (lastDriftGyro - gyro_value);
+        //// Filter drift when not moving
+        //// check this every 250mS
+        //if( (nSysTime - nSysTimeOffset) > 250 )
+        //    {
+        //    if( abs( gyro_value - lastDriftGyro ) < GYRO_DRIFT_THRESHOLD )
+        //        theGyro.drift_error += (lastDriftGyro - gyro_value);
 
-            lastDriftGyro = gyro_value;
+        //    lastDriftGyro = gyro_value;
 
-            nSysTimeOffset = nSysTime;
-            }
+        //    nSysTimeOffset = nSysTime;
+        //    }
 
         // Create float angle, remove offset
-        angle = (gyro_value + theGyro.drift_error)  / 10.0;
+        angle = (gyro_value)  / 10.0;
 
         // normalize into the range 0 - 360
         if( angle < 0 )

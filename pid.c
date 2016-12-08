@@ -80,10 +80,10 @@ task gyroDrift() {
 	float lastGyro;
 	while(true) {
 		if ( abs(lastGyro - SensorValue[gyro]) < 2)
-			gyroError += lastGyro - SensorValue[gyro];
+			gyroError += lastGyro - theGyro.abs_angle;
 
 		lastGyro = SensorValue[gyro];
-		currentValueGyro = SensorValue[gyro] + gyroError;
+		currentValueGyro = theGyro.abs_angle + gyroError;
 
 		wait1Msec(100);
 	}
@@ -182,13 +182,13 @@ task gyroTurn() {
 void startGyroTasks() {
 	//startTask(kFilter);
 	startTask(gyroTurn);
-	startTask(gyroDrift);
+	//startTask(gyroDrift);
 }
 
 void stopGyroTasks() {
 	//stopTask(kFilter);
 	stopTask(gyroTurn);
-	stopTask(gyroDrift);
+	//stopTask(gyroDrift);
 }
 
 void turn(float degrees) {
