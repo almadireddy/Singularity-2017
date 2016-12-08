@@ -21,40 +21,47 @@
 #include "Vex_Competition_Includes.c"
 
 #include "functions.c"
+#include "gyrolib.c"
 #include "pid.c"
 
 void pre_auton() {
 	bStopTasksBetweenModes = true;
 	SensorValue[leftEncoder] = SensorValue[rightEncoder] = 0;
+	//GyroInit();
 }
 
 task autonomous() {
+	//Completely clear out any previous sensor readings by setting the port to "sensorNone"
+	SensorType[in1] = sensorNone;
+	wait1Msec(1000);
+	//Reconfigure Analog Port 1 as a Gyro sensor and allow time for ROBOTC to calibrate it
+	SensorType[in1] = sensorGyro;
+	wait1Msec(2000);
+
+	SensorScale[in1] = 100;
 	driveKp = 0.3;
 	driveKi = 0.05;
 	driveKd = 0.0;
+	stopTask(drivePID);
 
-	go(10);
-	wait1Msec(1500);
-	go(-10);
-	wait1Msec(1500);
-	go(90);
-	wait1Msec(1500);
-	go(-10);
-	wait1Msec(1500);
-	go(90);
-	wait1Msec(1500);
-	go(-30);
-	wait1Msec(1500);
-	go(30);
-	wait1Msec(1500);
-	go(-30);
-	wait1Msec(1500);
+	//go(10);
+	//wait1Msec(1500);
+	//go(-10);
+	//wait1Msec(1500);
+	//go(90);
+	//wait1Msec(1500);
+	//go(-10);
+	//wait1Msec(1500);
+	//go(90);
+	//wait1Msec(1500);
+	//go(-30);
+	//wait1Msec(1500);
+	//go(30);
+	//wait1Msec(1500);
+	//go(-30);
+	//wait1Msec(1500);
 
 	///////////////////////////////////
-
-	//kpGyro = 0.05;
-	//kiGyro = 0.06;
-	//kdGyro = 0.0;
 
 	//go(120);
 	//wait1Msec(5000);
@@ -66,10 +73,22 @@ task autonomous() {
 	//wait1Msec(1500);
 	//go(50);
 	//wait1Msec(1500);
-	//go(-50);
+	go(20);
+	wait1Msec(1000);
+	stopTask(drivePID);
 
-	//startGyroTasks();
-	//turn(90);
+	startGyroTasks();
+	targetGyro = 3150;
+	wait1Msec(3000);
+	go(-40);
+	wait1Msec(3000);
+	stopTask(drivePID);
+	stopTask(gyroTurn);
+	lift(127);
+	wait1Msec(4500);
+	lift(-127);
+	wait1Msec(5000);
+	lift(0);
 
 }
 
