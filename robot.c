@@ -89,7 +89,7 @@ task autonomous() {
 	wait1Msec(500);
 	stopGyroTasks();
 
-	go(-20);							// drive backwards
+	go(-25);							// drive backwards
 	wait1Msec(1500);
 	stopTask(drivePID);
 
@@ -97,7 +97,7 @@ task autonomous() {
 	lift(127);
 	wait1Msec(5000);
 	lift(-127);
-	wait1Msec(5000);
+	wait1Msec(6200);
 	lift(0);
 
 	// This doesnt work at all
