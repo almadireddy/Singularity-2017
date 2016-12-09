@@ -73,7 +73,7 @@ task autonomous() {
 	targetGyro = 3150;		// turn 45 degrees to face pole
 	wait1Msec(3000);
 
-	go(-22);							// drive backwards
+	go(-20);							// drive backwards
 	wait1Msec(3000);
 	stopTask(drivePID);
 
