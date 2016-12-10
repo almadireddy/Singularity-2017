@@ -79,11 +79,6 @@ task autonomous() {
 
 	targetGyro = 6750;		// do 360 turn
 	wait1Msec(3500);
-	//stopTask(gyroTurn);
-
-	//go(-5);
-	//wait1Msec(1000);
-	//stopTask(drivePID);
 
 	targetGyro = 7200; 		// realign with pole
 	wait1Msec(500);
