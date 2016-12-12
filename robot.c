@@ -59,7 +59,6 @@ task autonomous() {
 		//go(-20);							// drive backwards
 		//wait1Msec(3000);
 		//stopTask(drivePID);
-
 		//targetGyro = 6750;		// do 360 turn
 		//wait1Msec(3500);
 
@@ -110,7 +109,6 @@ task autonomous() {
 		lift(-127);
 		wait1Msec(6000);
 		lift(0);
-
 
 
 
@@ -190,7 +188,6 @@ task autonomous() {
 		wait1Msec(5000);
 	}
 }
-
 
 float x;
 
