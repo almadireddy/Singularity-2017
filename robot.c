@@ -2,6 +2,8 @@
 #pragma config(Sensor, in1,    gyro,           sensorGyro)
 #pragma config(Sensor, dgtl1,  leftEncoder,    sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  rightEncoder,   sensorQuadEncoder)
+#pragma config(Sensor, dgtl11, jumper1,        sensorTouch)
+#pragma config(Sensor, dgtl12, jumper2,        sensorTouch)
 #pragma config(Sensor, I2C_1,  liftLeft,       sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  liftRight,      sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Motor,  port1,           rightbacktopmost, tmotorVex393_HBridge, openLoop, reversed)
@@ -40,92 +42,161 @@ void pre_auton() {
 }
 
 task autonomous() {
-
 	driveKp = 0.3;
 	driveKi = 0.05;
 	driveKd = 0.0;
 	stopTask(drivePID);
 
-	//go(10);
-	//wait1Msec(1500);
-	//go(-10);
-	//wait1Msec(1500);
-	//go(90);
-	//wait1Msec(1500);
-	//go(-10);
-	//wait1Msec(1500);
-	//go(90);
-	//wait1Msec(1500);
-	//go(-30);
-	//wait1Msec(1500);
-	//go(30);
-	//wait1Msec(1500);
-	//go(-30);
-	//wait1Msec(1500);
+	if(SensorValue[jumper1] == 1) {					// port11, long wire, blue side
+		//go(20);								// go forward
+		//wait1Msec(1000);
+		//stopTask(drivePID);
 
-	///////////////////////////////////
-	// this kinda works
-	go(20);								// go forward
-	wait1Msec(1000);
-	stopTask(drivePID);
+		//startGyroTasks();
+		//targetGyro = 3150;		// turn 45 degrees to face pole
+		//wait1Msec(3000);
 
-	startGyroTasks();
-	targetGyro = 3150;		// turn 45 degrees to face pole
-	wait1Msec(3000);
+		//go(-20);							// drive backwards
+		//wait1Msec(3000);
+		//stopTask(drivePID);
 
-	go(-20);							// drive backwards
-	wait1Msec(3000);
-	stopTask(drivePID);
+		//targetGyro = 6750;		// do 360 turn
+		//wait1Msec(3500);
 
-	targetGyro = 6750;		// do 360 turn
-	wait1Msec(3500);
-	//stopTask(gyroTurn);
+		//targetGyro = 7000; 		// realign with pole
+		//wait1Msec(500);
+		//stopGyroTasks();
 
-	//go(-5);
-	//wait1Msec(1000);
-	//stopTask(drivePID);
+		//go(-25);							// drive backwards
+		//wait1Msec(1500);
+		//stopTask(drivePID);
 
-	targetGyro = 7200; 		// realign with pole
-	wait1Msec(500);
-	stopGyroTasks();
-
-	go(-25);							// drive backwards
-	wait1Msec(1500);
-	stopTask(drivePID);
+		//lift(-127);
+		//wait1Msec(500);
+		//lift(127);
+		//wait1Msec(5000);
+		//lift(-127);
+		//wait1Msec(6200);
+		//lift(0);
 
 
-	lift(127);
-	wait1Msec(5000);
-	lift(-127);
-	wait1Msec(6200);
-	lift(0);
+		lift(-127);
+		wait1Msec(300);
+		lift(127);
 
-	// This doesnt work at all
-	//go(24);
-	//wait1Msec(1500);
-	//stopTask(drivePID);
+		go(12);
+		wait1Msec(1000);
+		stopTask(drivePID);
 
-	//startGyroTasks();
-	//targetGyro = 900;
-	//wait1Msec(1500);
-	//stopGyroTasks();
+		startGyroTasks();
 
-	//go(-5);
-	//wait1Msec(500);
-	//stopTask(drivePID);
+		targetGyro = -1800;
+		wait1Msec(2000);
+		stopGyroTasks();
 
-	//targetGyro = 3150;
-	//wait1Msec(1500);
-	//stopGyroTasks();
+		go(-10);
+		wait1Msec(1500);
+		stopTask(drivePID);
+
+		lift(0);
+
+		startGyroTasks();
+		targetGyro = -1350;
+		wait1Msec(2000);
+
+		go(-5);
+		wait1Msec(1500);
+
+		lift(-127);
+		wait1Msec(6000);
+		lift(0);
 
 
+
+
+	}
+
+	else if (SensorValue[jumper2] == 1) {				// port 12, short wire, red side
+		//lift(-127);
+		//wait1Msec(500);
+		//lift(127);
+
+		//go(20);								// go forward
+		//wait1Msec(1500);
+		//stopTask(drivePID);
+
+		//startGyroTasks();
+		//targetGyro = 450;		// turn 45 degrees to face pole
+		//wait1Msec(1500);
+
+		//lift(0);
+
+		//go(-20);							// drive backwards
+		//wait1Msec(2000);
+		//stopTask(drivePID);
+
+		//targetGyro = 4050;		// do 360 turn
+		//wait1Msec(2000);
+
+		//targetGyro = 4200; 		// realign with pole
+		//wait1Msec(1500);
+		//stopGyroTasks();
+
+		//go(-25);							// drive backwards
+		//wait1Msec(1500);
+		//stopTask(drivePID);
+
+		//lift(127);
+		//wait1Msec(1500);
+		//lift(-127);
+		//wait1Msec(6200);
+		//lift(0);
+
+		lift(-127);
+		wait1Msec(300);
+		lift(127);
+
+		go(12);
+		wait1Msec(1000);
+		stopTask(drivePID);
+
+		startGyroTasks();
+
+		targetGyro = 1800;
+		wait1Msec(2000);
+		stopGyroTasks();
+
+		go(-10);
+		wait1Msec(1500);
+		stopTask(drivePID);
+
+		lift(0);
+
+		startGyroTasks();
+		targetGyro = 1450;
+		wait1Msec(2000);
+
+		go(-5);
+		wait1Msec(1500);
+
+		lift(-127);
+		wait1Msec(6000);
+		lift(0);
+	}
+
+	else {
+		wait1Msec(10000);
+		go(90);
+		wait1Msec(5000);
+	}
 }
 
-task usercontrol() {
-	float x;
 
+float x;
+
+task usercontrol() {
 	while (true) {
-		x = getMotorEncoder(liftLeftTop);
+		x = SensorValue[gyro];
 		arcadeDrive();
 		liftControl();
 		lcd();
