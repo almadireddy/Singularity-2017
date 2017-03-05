@@ -22,6 +22,7 @@ void driveR(float power) {
 int t = 20;
 int ch3, ch1, ch2;
 
+// Arcade Drive with cubic rotation power curve, so small turns are easier to do.
 void arcadeDrive() {
 	if (abs(vexRT[Ch3]) > t)
 		ch3 = vexRT[Ch3];
@@ -59,11 +60,11 @@ void lcd() {
 	clearLCDLine(1);
 
 	displayLCDString(0, 0, "Primary: ");
-	sprintf(mainBattery, "%1.2f%c", nImmediateBatteryLevel/1000.0,'V'); //Build the value to be displayed
+	sprintf(mainBattery, "%1.2f%c", nImmediateBatteryLevel/1000.0,'V');
 	displayNextLCDString(mainBattery);
 
 	displayLCDString(1, 0, "Backup: ");
-	sprintf(backupBattery, "%1.2f%c", BackupBatteryLevel/1000.0, 'V');    //Build the value to be displayed
+	sprintf(backupBattery, "%1.2f%c", BackupBatteryLevel/1000.0, 'V');
 	displayNextLCDString(backupBattery);
 
 	wait1Msec(100);
