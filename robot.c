@@ -46,39 +46,9 @@ task autonomous() {
 	driveKi = 0.05;
 	driveKd = 0.0;
 	stopTask(drivePID);
-
-	if(SensorValue[jumper1] == 1) {					// port11, long wire, blue side
-		//go(20);								// go forward
-		//wait1Msec(1000);
-		//stopTask(drivePID);
-
-		//startGyroTasks();
-		//targetGyro = 3150;		// turn 45 degrees to face pole
-		//wait1Msec(3000);
-
-		//go(-20);							// drive backwards
-		//wait1Msec(3000);
-		//stopTask(drivePID);
-		//targetGyro = 6750;		// do 360 turn
-		//wait1Msec(3500);
-
-		//targetGyro = 7000; 		// realign with pole
-		//wait1Msec(500);
-		//stopGyroTasks();
-
-		//go(-25);							// drive backwards
-		//wait1Msec(1500);
-		//stopTask(drivePID);
-
-		//lift(-127);
-		//wait1Msec(500);
-		//lift(127);
-		//wait1Msec(5000);
-		//lift(-127);
-		//wait1Msec(6200);
-		//lift(0);
-
-
+	
+	// both autons lift, but one is red and other is blue.
+	if(SensorValue[jumper1] == 1) {
 		lift(-127);
 		wait1Msec(300);
 		lift(127);
@@ -109,47 +79,9 @@ task autonomous() {
 		lift(-127);
 		wait1Msec(6000);
 		lift(0);
-
-
-
 	}
 
-	else if (SensorValue[jumper2] == 1) {				// port 12, short wire, red side
-		//lift(-127);
-		//wait1Msec(500);
-		//lift(127);
-
-		//go(20);								// go forward
-		//wait1Msec(1500);
-		//stopTask(drivePID);
-
-		//startGyroTasks();
-		//targetGyro = 450;		// turn 45 degrees to face pole
-		//wait1Msec(1500);
-
-		//lift(0);
-
-		//go(-20);							// drive backwards
-		//wait1Msec(2000);
-		//stopTask(drivePID);
-
-		//targetGyro = 4050;		// do 360 turn
-		//wait1Msec(2000);
-
-		//targetGyro = 4200; 		// realign with pole
-		//wait1Msec(1500);
-		//stopGyroTasks();
-
-		//go(-25);							// drive backwards
-		//wait1Msec(1500);
-		//stopTask(drivePID);
-
-		//lift(127);
-		//wait1Msec(1500);
-		//lift(-127);
-		//wait1Msec(6200);
-		//lift(0);
-
+	else if (SensorValue[jumper2] == 1) {
 		lift(-127);
 		wait1Msec(300);
 		lift(127);
